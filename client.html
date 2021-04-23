@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <iframe
+      id="survey"
+      src="http://127.0.0.1:5501/crossorigin.html"
+      style="width: 100%; height: 50vh;"
+    ></iframe>
+    <button class="btn" id="my-btn">button</button>
+    <p id='para'></p>
+    <script>
+      window.onload = () => {
+        window.addEventListener(
+          "message",
+          function (e) {
+            if (e.origin === "http://127.0.0.1:5501") {
+              document.getElementById('para').innerHTML=e.data.btn +' got clicked'
+            }
+          },
+          false
+        );
+        const handleClick = () => {
+          var receiver = document.getElementById("survey").contentWindow;
+          receiver.postMessage(
+            "message from parent",
+            "http://127.0.0.1:5501/crossorigin.html"
+          );
+        };
+
+        var btn = document
+          .getElementById("my-btn")
+          .addEventListener("click", handleClick, false);
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="para">survey monkey page</p>
+    <button class="btn" id="my-btn1" value="back">Back</button>
+    <button class="btn" id="my-btn2" value="done">Done</button>
+
+    <script>
+      window.addEventListener("message", (e) => {
+        if (e.origin === "http://127.0.0.1:5500") {
+          document.getElementById("para").innerHTML = e.data;
+        }
+      });
+
+      window.onload = () => {
+        function handleButtonClick(e) {
+          parent.postMessage({btn:e.target.value}, "http://127.0.0.1:5500");
+        }
+        document
+          .getElementById("my-btn1")
+          .addEventListener("click", handleButtonClick, false);
+
+        document
+          .getElementById("my-btn2")
+          .addEventListener("click", handleButtonClick, false);
+      };
+    </script>
+  </body>
+</html>
